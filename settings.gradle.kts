@@ -1,2 +1,2 @@
 include(":app")
-rootProject.name = "u2020-dagger2"
+rootProject.name = "razer-pay-dagger2"
