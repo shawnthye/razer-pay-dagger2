@@ -3,11 +3,11 @@ package com.example.u2020.data
 internal enum class ApiServers(private val description: String, val url: String?) {
     PRODUCTION(
         "Production",
-        "ApiModule.PRODUCTION_API_URL"
+        "https://api.pay.razer.com"
     ),
     UAT(
         "UAT",
-        "ApiModule.UAT_API_URL"
+        "https://api-uat.pay.razer.com"
     ),
     CUSTOM("Custom", null);
 

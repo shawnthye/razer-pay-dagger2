@@ -76,8 +76,11 @@ dependencies {
     implementation("com.google.android.material:material:1.1.0")
     implementation("androidx.constraintlayout:constraintlayout:1.1.3")
 
+    // Http
     implementation("com.squareup.okhttp3:okhttp:${Versions.OKHTTP}")
     implementation("com.squareup.okhttp3:logging-interceptor:${Versions.OKHTTP}")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+
 
     //Tests
     testImplementation("junit:junit:4.13")
