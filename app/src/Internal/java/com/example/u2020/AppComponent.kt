@@ -11,7 +11,8 @@ import javax.inject.Singleton
     modules = [
         AndroidSupportInjectionModule::class,
         AppModule::class,
-        InternalDataModule::class,
-        InternalUiModule::class]
+        InternalUiModule::class,
+        InternalDataModule::class
+    ]
 )
 interface AppComponent : AppGraph

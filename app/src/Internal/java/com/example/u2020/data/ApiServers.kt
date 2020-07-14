@@ -1,13 +1,15 @@
 package com.example.u2020.data
 
-internal enum class ApiServers(private val description: String, val url: String?) {
+import com.example.u2020.data.api.ApiModule
+
+enum class ApiServers(private val description: String, val url: String?) {
     PRODUCTION(
-        "Production",
-        "https://api.pay.razer.com"
+        description = "Production",
+        url = ApiModule.PRODUCTION_WALLET_API_URL
     ),
     UAT(
-        "UAT",
-        "https://api-uat.pay.razer.com"
+        description = "UAT",
+        url = "https://api-uat.pay.razer.com"
     ),
     CUSTOM("Custom", null);
 
@@ -24,5 +26,4 @@ internal enum class ApiServers(private val description: String, val url: String?
             return CUSTOM
         }
     }
-
 }

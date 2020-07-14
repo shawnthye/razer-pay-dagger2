@@ -1,6 +1,7 @@
 package com.example.u2020.ui.debug
 
 import android.app.Activity
+import android.content.Intent
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -12,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.example.u2020.App
 import com.example.u2020.R
 import com.example.u2020.data.ApiCustomServerURL
 import com.example.u2020.data.ApiServer
@@ -21,16 +23,20 @@ import com.example.u2020.data.prefs.BooleanPreference
 import com.example.u2020.data.prefs.IntPreference
 import com.example.u2020.data.prefs.StringPreference
 import com.example.u2020.ui.AppContainer
+import com.example.u2020.ui.activities.MainActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.internal.debug_activity_root.*
 import kotlinx.android.synthetic.internal.debug_drawer.*
 import kotlinx.android.synthetic.internal.debug_drawer.view.*
+import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class DebugAppContainer @Inject constructor(
+    private val app: App,
+    private val httpLoggingInterceptor: HttpLoggingInterceptor,
     @ApiServer private val apiServer: IntPreference,
     @ApiCustomServerURL private val apiCustomServerURL: StringPreference,
     @SeenDebugDrawer private val seenDebugDrawer: BooleanPreference
@@ -111,6 +117,7 @@ class DebugAppContainer @Inject constructor(
 
         if (selectedServer != ApiServers.CUSTOM) {
             apiServer.set(selectedServer.ordinal)
+            relaunch()
             view.editServerURL.visibility = GONE
             return
         }
@@ -157,15 +164,11 @@ class DebugAppContainer @Inject constructor(
                 ?.toString()
                 ?.takeIf { it.trim().isNotBlank() && URLUtil.isValidUrl(it) }
                 ?.also {
-                    networkServers.setText(it, false)
                     apiServer.set(ApiServers.CUSTOM.ordinal)
                     apiCustomServerURL.set(it)
-                    networkServerAdapter.notifyDataSetChanged()
                     dialog.dismiss()
-                    view.editServerURL.visibility = VISIBLE
+                    relaunch()
                 } ?: {
-                // failed to set server, revert back to previous selection
-                networkServers.setText(prevServer.toString(), false)
                 Toast.makeText(context, "Invalid url", 0).show()
             }()
         }
@@ -180,7 +183,19 @@ class DebugAppContainer @Inject constructor(
         )
         val textView = view.networkLoggingLevels
         textView.setAdapter(adapter)
+        textView.setOnItemClickListener { _, _, position, _ ->
+            adapter.getItem(position)?.also {
+                httpLoggingInterceptor.setLevel(it)
+            }
+        }
         textView.keyListener = null
-        textView.setText(adapter.getItem(Level.BASIC.ordinal).toString(), false)
+        textView.setText(adapter.getItem(httpLoggingInterceptor.level.ordinal).toString(), false)
+    }
+
+    private fun relaunch() {
+        val newApp = Intent(app, MainActivity::class.java)
+        Intent.makeRestartActivityTask(newApp.component)
+        app.startActivity(Intent.makeRestartActivityTask(newApp.component))
+        app.buildComponent().inject(app)
     }
 }

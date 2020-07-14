@@ -3,6 +3,7 @@ package com.example.u2020.data
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.u2020.data.api.InternalApiModule
 import com.example.u2020.data.prefs.BooleanPreference
 import com.example.u2020.data.prefs.IntPreference
 import com.example.u2020.data.prefs.StringPreference
@@ -10,8 +11,14 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-@Module(includes = [DataModule::class])
+@Module(includes = [DataModule::class, InternalApiModule::class])
 class InternalDataModule {
+
+//    @Provides
+//    @Singleton
+//    fun provideSharedPreferences(app: Application): SharedPreferences {
+//        return app.getSharedPreferences("RazerPay", Context.MODE_PRIVATE)
+//    }
 
     @Provides
     @Singleton

@@ -4,12 +4,12 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-@Module
-class ProductionUiModule : UiModule {
+@Module(includes = [UiModule::class])
+class ProductionUiModule {
 
     @Provides
     @Singleton
-    override fun provideAppContainer(): AppContainer {
-        return super.provideAppContainer()
+    fun provideAppContainer(): AppContainer {
+        return AppContainer.DEFAULT
     }
 }

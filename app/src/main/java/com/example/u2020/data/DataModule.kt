@@ -4,11 +4,13 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.room.Room
+import com.example.u2020.BuildConfig
 import com.example.u2020.data.database.WordRoomDatabase
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import okhttp3.logging.HttpLoggingInterceptor.Level
 import javax.inject.Singleton
 
 @Module
@@ -29,15 +31,23 @@ class DataModule {
         ).build()
     }
 
-    companion object {
+    @Provides @Singleton fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
+        val loggingInterceptor = HttpLoggingInterceptor()
+        loggingInterceptor.setLevel(
+            if (BuildConfig.DEBUG) {
+                Level.BASIC
+            } else {
+                Level.NONE
+            }
+        )
 
-//        const val DISK_CACHE_SIZE = 50 * 1024 * 1024 // 50MB
+        return loggingInterceptor
+    }
 
-        fun createOkHttpClient(networkInterceptor: HttpLoggingInterceptor): OkHttpClient {
-            return OkHttpClient
-                .Builder()
-                .addNetworkInterceptor(networkInterceptor)
-                .build()
-        }
+    @Provides @Singleton fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+        return OkHttpClient
+            .Builder()
+            .addNetworkInterceptor(httpLoggingInterceptor)
+            .build()
     }
 }

@@ -21,6 +21,11 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        compileOptions {
+            sourceCompatibility = JavaVersion.VERSION_1_8
+            targetCompatibility = JavaVersion.VERSION_1_8
+        }
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -51,6 +56,8 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation("org.jetbrains.kotlin:kotlin-stdlib:${Versions.KOTLIN}")
     implementation("androidx.core:core-ktx:1.3.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.7")
 
     //Dagger
     implementation("com.google.dagger:dagger:${Versions.DAGGER}")
@@ -80,7 +87,6 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:${Versions.OKHTTP}")
     implementation("com.squareup.okhttp3:logging-interceptor:${Versions.OKHTTP}")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
-
 
     //Tests
     testImplementation("junit:junit:4.13")
