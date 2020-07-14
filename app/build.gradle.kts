@@ -3,6 +3,7 @@ plugins {
     kotlin("android")
     kotlin("android.extensions")
     kotlin("kapt")
+    id("kotlin-android")
 }
 
 object Flavors {
@@ -55,6 +56,11 @@ dependencies {
     implementation("com.google.dagger:dagger:${Versions.DAGGER}")
     kapt("com.google.dagger:dagger-compiler:${Versions.DAGGER}")
 
+    //Dagger Android
+    implementation("com.google.dagger:dagger-android:${Versions.DAGGER}")
+    implementation("com.google.dagger:dagger-android-support:${Versions.DAGGER}")
+    kapt("com.google.dagger:dagger-android-processor:${Versions.DAGGER}")
+
     // Room
     implementation("androidx.room:room-runtime:${Versions.ROOM}")
     kapt("androidx.room:room-compiler:${Versions.ROOM}")
@@ -67,7 +73,11 @@ dependencies {
 
     // UI
     implementation("androidx.appcompat:appcompat:1.1.0")
+    implementation("com.google.android.material:material:1.1.0")
     implementation("androidx.constraintlayout:constraintlayout:1.1.3")
+
+    implementation("com.squareup.okhttp3:okhttp:${Versions.OKHTTP}")
+    implementation("com.squareup.okhttp3:logging-interceptor:${Versions.OKHTTP}")
 
     //Tests
     testImplementation("junit:junit:4.13")

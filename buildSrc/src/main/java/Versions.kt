@@ -13,4 +13,6 @@ object Versions {
     const val ROOM = "2.2.5"
     const val DAGGER = "2.28.1"
 
+    const val OKHTTP = "4.8.0"
+
 }

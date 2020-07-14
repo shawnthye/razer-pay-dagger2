@@ -1,0 +1,44 @@
+<resources>
+
+    <style name="None" />
+
+
+    <style name="Internal.Drawer" parent="@style/Theme.MaterialComponents">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <!--        <item name="colorControlNormal">@color/colorPrimary</item>-->
+        <item name="android:windowBackground">#FF000000</item>
+    </style>
+
+    <style name="Internal.Widget.DebugDrawer.Header" parent="@style/TextAppearance.AppCompat.Title">
+        <item name="fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+        <item name="android:textAllCaps">true</item>
+        <!--        <item name="android:textSize">12sp</item>-->
+        <item name="android:layout_marginTop">24dp</item>
+        <item name="android:layout_marginBottom">2dp</item>
+    </style>
+
+    <style name="Internal.Widget.DebugDrawer.DropDown" parent="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu">
+        <item name="android:layout_marginTop">12dp</item>
+        <item name="hintTextColor">?colorPrimary</item>
+    </style>
+
+    <style name="Internal.Widget.DebugDrawer.DropDown.Text" parent="@style/None">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:focusable">false</item>
+        <item name="android:focusableInTouchMode">false</item>
+        <item name="android:cursorVisible">false</item>
+        <item name="android:clickable">false</item>
+        <item name="android:inputType">none</item>
+    </style>
+
+    <style name="Internal.Widget.DebugDrawer.DropDown.Hint" parent="None">
+        <item name="textAllCaps">false</item>
+    </style>
+</resources>

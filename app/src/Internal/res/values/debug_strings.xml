@@ -1,0 +1,8 @@
+<resources>
+    <string name="debug_drawer_subtitle">Development Settings</string>
+    <string name="debug_drawer_title_network">Network</string>
+    <string name="debug_drawer_title_server">Server</string>
+    <string name="debug_drawer_title_logging">Logging</string>
+    <string name="debug_drawer_custom_url_helper_text">https://localhost:8080…</string>
+    <string name="debug_drawer_welcome">Development settings are available in this drawer.</string>
+</resources>

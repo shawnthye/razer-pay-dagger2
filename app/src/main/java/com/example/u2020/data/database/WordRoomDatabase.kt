@@ -20,24 +20,24 @@ abstract class WordRoomDatabase : RoomDatabase() {
 
         override fun onOpen(db: SupportSQLiteDatabase) {
             super.onOpen(db)
-            INSTANCE?.let { database ->
-                scope.launch {
-                    val wordDao = database.wordDao()
-
-                    // Delete all content here.
-//                    wordDao.deleteAll()
-
-//                    // Add sample words.
-//                    var word = Word("Hello")
-//                    wordDao.insert(word)
-//                    word = Word("World!")
-//                    wordDao.insert(word)
+//            INSTANCE?.let { database ->
+//                scope.launch {
+////                    val wordDao = database.wordDao()
 //
-//                    // TODO: Add your own words!
-//                    word = Word("TODO!")
-//                    wordDao.insert(word)
-                }
-            }
+//                    // Delete all content here.
+////                    wordDao.deleteAll()
+//
+////                    // Add sample words.
+////                    var word = Word("Hello")
+////                    wordDao.insert(word)
+////                    word = Word("World!")
+////                    wordDao.insert(word)
+////
+////                    // TODO: Add your own words!
+////                    word = Word("TODO!")
+////                    wordDao.insert(word)
+//                }
+//            }
         }
     }
 

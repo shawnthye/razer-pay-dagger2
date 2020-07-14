@@ -1,11 +1,17 @@
 package com.example.u2020
 
-import com.example.u2020.data.DataModule
 import com.example.u2020.data.InternalDataModule
+import com.example.u2020.ui.InternalUiModule
 import dagger.Component
+import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AppModule::class, InternalDataModule::class])
-interface AppComponent : AppGraph {
-}
+@Component(
+    modules = [
+        AndroidSupportInjectionModule::class,
+        AppModule::class,
+        InternalDataModule::class,
+        InternalUiModule::class]
+)
+interface AppComponent : AppGraph
