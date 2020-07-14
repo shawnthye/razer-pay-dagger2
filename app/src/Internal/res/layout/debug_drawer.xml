@@ -2,21 +2,22 @@
 
 
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/debug_drawer_content"
     android:layout_width="320dp"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:layout_gravity="end"
     android:background="?android:windowBackground"
+    android:fitsSystemWindows="true"
     android:theme="@style/Internal.Drawer">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="12dp"
+        tools:layout_height="match_parent"
         tools:showIn="@layout/debug_activity_root">
 
         <LinearLayout
@@ -54,9 +55,9 @@
         </LinearLayout>
 
         <TextView
+            style="@style/Internal.Widget.DebugDrawer.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/Internal.Widget.DebugDrawer.Header"
             android:text="@string/debug_drawer_title_network" />
 
         <View
@@ -71,10 +72,10 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Internal.Widget.DebugDrawer.DropDown"
-                android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/debug_drawer_title_server">
+                android:layout_weight="1"
+                android:hint="@string/debug_drawer_hint_server">
 
                 <AutoCompleteTextView
                     android:id="@+id/networkServers"
@@ -87,22 +88,185 @@
                 android:layout_width="48dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="bottom"
-                android:paddingTop="12dp"
                 android:background="@android:color/transparent"
-                android:tint="@color/colorPrimary"
-                android:src="@drawable/ic_baseline_edit_24" />
+                android:paddingTop="12dp"
+                android:src="@drawable/ic_baseline_edit_24"
+                android:tint="@color/colorPrimary" />
         </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Internal.Widget.DebugDrawer.DropDown"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/debug_drawer_title_logging">
+            android:hint="@string/debug_drawer_hint_logging">
 
             <AutoCompleteTextView
                 android:id="@+id/networkLoggingLevels"
                 style="@style/Internal.Widget.DebugDrawer.DropDown.Text" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            style="@style/Internal.Widget.DebugDrawer.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/debug_drawer_title_build" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?colorPrimary" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/internal_build_name_header"
+                style="@style/Internal.Widget.DebugDrawer.RowTitle"
+                android:text="@string/debug_drawer_header_build_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/internal_build_name"
+                style="@style/Internal.Widget.DebugDrawer.RowValue"
+                app:layout_constraintBaseline_toBaselineOf="@id/internal_build_name_header"
+                app:layout_constraintStart_toStartOf="@id/build_barrier"
+                tools:text="Version Name" />
+
+            <TextView
+                android:id="@+id/internal_build_code_header"
+                style="@style/Internal.Widget.DebugDrawer.RowTitle"
+                android:text="@string/debug_drawer_header_build_code"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/internal_build_name_header" />
+
+            <TextView
+                android:id="@+id/internal_build_code"
+                style="@style/Internal.Widget.DebugDrawer.RowValue"
+                app:layout_constraintBaseline_toBaselineOf="@id/internal_build_code_header"
+                app:layout_constraintStart_toStartOf="@id/build_barrier"
+                tools:text="Version Code" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/build_barrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="end"
+                app:constraint_referenced_ids="internal_build_name_header,internal_build_code_header" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            style="@style/Internal.Widget.DebugDrawer.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/debug_drawer_title_device" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?colorPrimary" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/internal_device_make_header"
+                style="@style/Internal.Widget.DebugDrawer.RowTitle"
+                android:text="@string/debug_drawer_header_device_make"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/internal_device_make"
+                style="@style/Internal.Widget.DebugDrawer.RowValue"
+                app:layout_constraintBaseline_toBaselineOf="@id/internal_device_make_header"
+                app:layout_constraintStart_toStartOf="@id/device_barrier"
+                tools:text="Razer" />
+
+            <TextView
+                android:id="@+id/internal_device_model_header"
+                style="@style/Internal.Widget.DebugDrawer.RowTitle"
+                android:text="@string/debug_drawer_header_device_model"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/internal_device_make_header" />
+
+            <TextView
+                android:id="@+id/internal_device_model"
+                style="@style/Internal.Widget.DebugDrawer.RowValue"
+                app:layout_constraintBaseline_toBaselineOf="@id/internal_device_model_header"
+                app:layout_constraintStart_toStartOf="@id/device_barrier"
+                tools:text="Emulator" />
+
+            <TextView
+                android:id="@+id/internal_device_resolution_header"
+                style="@style/Internal.Widget.DebugDrawer.RowTitle"
+                android:text="@string/debug_drawer_header_device_resolution"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/internal_device_model_header" />
+
+            <TextView
+                android:id="@+id/internal_device_resolution"
+                style="@style/Internal.Widget.DebugDrawer.RowValue"
+                app:layout_constraintBaseline_toBaselineOf="@id/internal_device_resolution_header"
+                app:layout_constraintStart_toStartOf="@id/device_barrier"
+                tools:text="0" />
+
+            <TextView
+                android:id="@+id/internal_device_density_header"
+                style="@style/Internal.Widget.DebugDrawer.RowTitle"
+                android:text="@string/debug_drawer_header_device_density"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/internal_device_resolution_header" />
+
+            <TextView
+                android:id="@+id/internal_device_density"
+                style="@style/Internal.Widget.DebugDrawer.RowValue"
+                app:layout_constraintBaseline_toBaselineOf="@id/internal_device_density_header"
+                app:layout_constraintStart_toStartOf="@id/device_barrier"
+                tools:text="0" />
+
+            <TextView
+                android:id="@+id/internal_device_release_header"
+                style="@style/Internal.Widget.DebugDrawer.RowTitle"
+                android:text="@string/debug_drawer_header_device_release"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/internal_device_density_header" />
+
+            <TextView
+                android:id="@+id/internal_device_release"
+                style="@style/Internal.Widget.DebugDrawer.RowValue"
+                app:layout_constraintBaseline_toBaselineOf="@id/internal_device_release_header"
+                app:layout_constraintStart_toStartOf="@id/device_barrier"
+                tools:text="0" />
+
+            <TextView
+                android:id="@+id/internal_device_api_header"
+                style="@style/Internal.Widget.DebugDrawer.RowTitle"
+                android:text="@string/debug_drawer_header_device_api"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/internal_device_release_header" />
+
+            <TextView
+                android:id="@+id/internal_device_api"
+                style="@style/Internal.Widget.DebugDrawer.RowValue"
+                app:layout_constraintBaseline_toBaselineOf="@id/internal_device_api_header"
+                app:layout_constraintStart_toStartOf="@id/device_barrier"
+                tools:text="0" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/device_barrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="end"
+                app:constraint_referenced_ids="
+                internal_device_make_header,
+                internal_device_model_header,
+                internal_device_resolution_header" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

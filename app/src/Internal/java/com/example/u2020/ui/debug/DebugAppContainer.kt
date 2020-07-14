@@ -2,6 +2,8 @@ package com.example.u2020.ui.debug
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
+import android.util.DisplayMetrics
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -14,6 +16,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.u2020.App
+import com.example.u2020.BuildConfig
 import com.example.u2020.R
 import com.example.u2020.data.ApiCustomServerURL
 import com.example.u2020.data.ApiServer
@@ -55,6 +58,7 @@ class DebugAppContainer @Inject constructor(
 
         val seenDebugDrawer = seenDebugDrawer.value
         val drawer = activity.debug_drawer_layout
+
         drawer.addDrawerListener(object : DrawerLayout.SimpleDrawerListener() {
             override fun onDrawerClosed(drawerView: View) {
                 this@DebugAppContainer.seenDebugDrawer.value = true
@@ -79,6 +83,8 @@ class DebugAppContainer @Inject constructor(
         }
 
         setupNetworkLoggingLevels(drawerContent)
+        setupBuildInformation(drawerContent)
+        setupDeviceInformation(drawerContent)
         return activity.app_content
     }
 
@@ -136,6 +142,7 @@ class DebugAppContainer @Inject constructor(
         if (customServerURL.isNullOrBlank().not() && !force) {
             apiServer.set(ApiServers.CUSTOM.ordinal)
             view.editServerURL.visibility = VISIBLE
+            relaunch()
             return
         }
 
@@ -192,10 +199,51 @@ class DebugAppContainer @Inject constructor(
         textView.setText(adapter.getItem(httpLoggingInterceptor.level.ordinal).toString(), false)
     }
 
+    private fun setupBuildInformation(view: ViewGroup) {
+        view.internal_build_name.text = BuildConfig.VERSION_NAME
+        view.internal_build_code.text = BuildConfig.VERSION_CODE.toString()
+    }
+
+    private fun setupDeviceInformation(view: ViewGroup) {
+        val resources = view.resources
+        val displayMetrics = resources.displayMetrics
+        view.internal_device_make.text = Build.MANUFACTURER
+        view.internal_device_model.text = Build.MODEL
+
+        view.internal_device_resolution.text = resources.getString(
+            R.string.debug_drawer_header_device_resolution_template,
+            displayMetrics.heightPixels,
+            displayMetrics.widthPixels
+        )
+
+        view.internal_device_density.text = resources.getString(
+            R.string.debug_drawer_header_device_density_template,
+            displayMetrics.densityDpi,
+            displayMetrics.densityBucket
+        )
+
+        view.internal_device_release.text = Build.VERSION.RELEASE
+        view.internal_device_api.text = Build.VERSION.SDK_INT.toString()
+    }
+
     private fun relaunch() {
         val newApp = Intent(app, MainActivity::class.java)
         Intent.makeRestartActivityTask(newApp.component)
         app.startActivity(Intent.makeRestartActivityTask(newApp.component))
         app.buildComponent().inject(app)
     }
+
+    private val DisplayMetrics.densityBucket: String
+        get() {
+            return when (densityDpi) {
+                DisplayMetrics.DENSITY_LOW -> "ldpi"
+                DisplayMetrics.DENSITY_MEDIUM -> "mdpi"
+                DisplayMetrics.DENSITY_HIGH -> "hdpi"
+                DisplayMetrics.DENSITY_XHIGH -> "xhdpi"
+                DisplayMetrics.DENSITY_XXHIGH -> "xxhdpi"
+                DisplayMetrics.DENSITY_XXXHIGH -> "xxxhdpi"
+                DisplayMetrics.DENSITY_TV -> "tvdpi"
+                else -> "unknown"
+            }
+        }
 }

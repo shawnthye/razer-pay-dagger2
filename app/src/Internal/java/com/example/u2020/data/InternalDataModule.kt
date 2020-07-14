@@ -14,16 +14,22 @@ import javax.inject.Singleton
 @Module(includes = [DataModule::class, InternalApiModule::class])
 class InternalDataModule {
 
-//    @Provides
-//    @Singleton
-//    fun provideSharedPreferences(app: Application): SharedPreferences {
-//        return app.getSharedPreferences("RazerPay", Context.MODE_PRIVATE)
-//    }
+    @Provides
+    @Singleton
+    fun provideSharedPreferences(
+        app: Application,
+        @ApiServer apiServer: IntPreference
+    ): SharedPreferences {
+        return app.getSharedPreferences(
+            "${DataModule.SHARED_PREFERENCES_NAME}_${ApiServers.from(apiServer.get()).name}",
+            Context.MODE_PRIVATE
+        )
+    }
 
     @Provides
     @Singleton
     @DebugSharedPreferences
-    fun provideSharedPreferences(app: Application): SharedPreferences {
+    fun provideDebugSharedPreferences(app: Application): SharedPreferences {
         return app.getSharedPreferences("debug_razerpay_development_settings", Context.MODE_PRIVATE)
     }
 

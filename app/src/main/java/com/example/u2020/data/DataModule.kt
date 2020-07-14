@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.room.Room
 import com.example.u2020.BuildConfig
+import com.example.u2020.data.api.ApiModule
 import com.example.u2020.data.database.WordRoomDatabase
 import dagger.Module
 import dagger.Provides
@@ -13,13 +14,11 @@ import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level
 import javax.inject.Singleton
 
-@Module
+@Module(includes = [ApiModule::class])
 class DataModule {
 
-    @Provides
-    @Singleton
-    fun provideSharedPreferences(app: Application): SharedPreferences {
-        return app.getSharedPreferences("RazerPay", Context.MODE_PRIVATE)
+    companion object {
+        const val SHARED_PREFERENCES_NAME = "RazerPay"
     }
 
     @Provides
@@ -32,16 +31,13 @@ class DataModule {
     }
 
     @Provides @Singleton fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
-        val loggingInterceptor = HttpLoggingInterceptor()
-        loggingInterceptor.setLevel(
+        return HttpLoggingInterceptor().setLevel(
             if (BuildConfig.DEBUG) {
                 Level.BASIC
             } else {
                 Level.NONE
             }
         )
-
-        return loggingInterceptor
     }
 
     @Provides @Singleton fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
