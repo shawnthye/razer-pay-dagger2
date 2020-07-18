@@ -7,7 +7,7 @@ object Versions {
     const val TARGET_SDK = 29
     const val MIN_SDK = 19
 
-    const val ANDROID_GRADLE_PLUGIN = "4.0.0"
+    const val ANDROID_GRADLE_PLUGIN = "4.0.1"
     const val GOOGLE_SERVICES = "4.3.3"
     const val KOTLIN = "1.3.72"
     const val ROOM = "2.2.5"
