@@ -9,6 +9,7 @@ import com.example.u2020.data.api.ApiModule
 import com.example.u2020.data.database.WordRoomDatabase
 import dagger.Module
 import dagger.Provides
+import okhttp3.ConnectionSpec
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level
@@ -43,6 +44,7 @@ class DataModule {
     @Provides @Singleton fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         return OkHttpClient
             .Builder()
+            .connectionSpecs(listOf(ConnectionSpec.COMPATIBLE_TLS))
             .addNetworkInterceptor(httpLoggingInterceptor)
             .build()
     }

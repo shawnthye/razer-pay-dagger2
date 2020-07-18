@@ -13,6 +13,7 @@ object Versions {
     const val ROOM = "2.2.5"
     const val DAGGER = "2.28.1"
 
-    const val OKHTTP = "4.8.0"
+    const val OKHTTP = "3.12.12" // to support API 19
+//    const val OKHTTP = "4.8.0"
 
 }

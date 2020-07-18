@@ -1,6 +1,7 @@
 package com.example.u2020.ui.activities
 
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.u2020.R
 import com.example.u2020.data.api.WalletApi
 import com.example.u2020.ui.AppContainer

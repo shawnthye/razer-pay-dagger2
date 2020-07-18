@@ -8,7 +8,6 @@ import com.example.u2020.data.prefs.StringPreference
 import dagger.Module
 import dagger.Provides
 import okhttp3.HttpUrl
-import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import javax.inject.Singleton
 
 @Module(includes = [ApiModule::class])
@@ -20,11 +19,10 @@ class InternalApiModule {
     ): HttpUrl {
 
         val apiServers = ApiServers.from(apiServer.get())
-
         return if (apiServers != ApiServers.CUSTOM) {
-            apiServers.url?.toHttpUrlOrNull()
+            apiServers.url?.let { HttpUrl.parse(it) }
         } else {
-            customServerURL.get()?.toHttpUrlOrNull()
+            customServerURL.get()?.let { HttpUrl.parse(it) }
         } ?: throw IllegalArgumentException("Missing Wallet Api URL")
     }
 }

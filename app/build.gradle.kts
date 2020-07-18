@@ -26,6 +26,10 @@ android {
             targetCompatibility = JavaVersion.VERSION_1_8
         }
 
+        vectorDrawables {
+            useSupportLibrary = true
+        }
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -84,7 +88,11 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:1.1.3")
 
     // Http
-    implementation("com.squareup.okhttp3:okhttp:${Versions.OKHTTP}")
+    implementation("com.squareup.okhttp3:okhttp") {
+        version {
+            strictly(Versions.OKHTTP)
+        }
+    }
     implementation("com.squareup.okhttp3:logging-interceptor:${Versions.OKHTTP}")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
 
